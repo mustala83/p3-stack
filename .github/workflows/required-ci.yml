@@ -1,0 +1,11 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  required-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          echo "P3-CI ref=${{ github.ref }}"
+          git log --oneline -n 10
+          sleep 80
