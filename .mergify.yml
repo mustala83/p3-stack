@@ -1,16 +1,22 @@
+# P3 EVIDENCE FIXTURE - INERT.
+# The merge queue is gated on a label only the repository owner can add and never will,
+# so no pull request is ever queued and no CI churns.
+# To re-run the P3-02 co-location trial, restore:
+#   queue_rules: [{name: default, batch_size: 3, batch_max_wait_time: 5 min,
+#                  queue_conditions: [base=main], merge_conditions: [check-success=required-ci]}]
+#   pull_request_rules: [{name: queue, conditions: [base=main], actions: {queue: {name: default}}}]
 queue_rules:
   - name: default
     batch_size: 3
-    batch_max_wait_time: 5 min
     queue_conditions:
-      - base=main
+      - label=p3-never-queue
     merge_conditions:
       - check-success=required-ci
 
 pull_request_rules:
   - name: queue
     conditions:
-      - base=main
+      - label=p3-never-queue
     actions:
       queue:
         name: default
